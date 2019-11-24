@@ -1,0 +1,6 @@
+<%-- 포함될 파일에도 page 디렉티브 선언 --%>    
+<%-- => 원본 JSP 문서와 동일한 속성값으로 설정해야만 포함 가능 --%>    
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+	<h1>Header 영역</h1>
+	<hr>

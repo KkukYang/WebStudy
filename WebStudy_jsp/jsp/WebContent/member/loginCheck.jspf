@@ -1,0 +1,31 @@
+<%@page import="com.tjoeun.dto.MemberDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+	//세션에 저장되어 공유된 로그인 인증정보를 반환받아 저장
+	MemberDTO loginMember=(MemberDTO)session.getAttribute("loginMember");
+
+	//로그인 인증정보가 존재하지 않을 경우 
+	// => 미로그인 사용자 : 비정상적인 요청에 대한 응답 처리
+	// => 세션에 에러 메세지 및 현재 페이지 URI 주소를 저장 공유 후 memberLogin.jsp로 이동
+	if(loginMember==null) {
+		//request.getRequestURI() : 현재 페이지의 URI 주소를 반환하는 메소드
+		String uri=request.getRequestURI();
+		
+		//request.getQueryString() : 현재 페이지의 URI에 존재하는 QueryString를 반환하는 메소드
+		String query=request.getQueryString();
+		
+		if(query==null || query.equals("null")) {
+			query="";
+		} else {
+			query="?"+query;
+		}
+		
+		//세션에 현재 페이지 uri 주소를 저장하여 공유
+		session.setAttribute("uri", uri+query);
+		
+		session.setAttribute("errorMessage", "로그인 사용자만 접근 가능합니다.");
+		response.sendRedirect("memberLogin.jsp");
+		return;
+	}
+%> 
